@@ -69,14 +69,42 @@ int main(int argc, char *argv[])
     Get_Ip(attack_ip, interface);
     Get_Mac(attack_mac, interface);
 
-    packet[0] = 0xff;packet[1] = 0xff;packet[2] = 0xff;packet[3] = 0xff;packet[4] = 0xff;packet[5] = 0xff;
-    packet[6] = attack_mac[0];packet[7] = attack_mac[1];packet[8] = attack_mac[2];packet[9] = attack_mac[3];packet[10] = attack_mac[4];packet[11] = attack_mac[5];
-    packet[12] = 0x08; packet[13] = 0x06;
-    packet[14] = 0x00;packet[15] = 0x01;packet[16] = 0x08;packet[17] = 0x00;packet[18] = 0x06;packet[19] = 0x04;packet[20] = 0x00;packet[21] = 0x01;
-    packet[22] = attack_mac[0];packet[23] = attack_mac[1];packet[24] = attack_mac[2];packet[25] = attack_mac[3];packet[26] = attack_mac[4];packet[27] = attack_mac[5];
-    packet[28] = attack_ip[0];packet[29] = attack_ip[1];packet[30] = attack_ip[2];packet[31] = attack_ip[3];
-    packet[32] = 0x00; packet[33] = 0x00; packet[34] = 0x00; packet[35] = 0x00; packet[36] = 0x00; packet[37] = 0x00;
-    packet[38] = tip[0];packet[39] = tip[1];packet[40] = tip[2];packet[41] = tip[3];
+    for(int i=0; i<6; i++){
+        packet[i] = 0xff;
+    }
+    for(int i=6; i<12; i++){
+        int j=0;
+        packet[i] = attack_mac[j];
+        j++;
+    }
+    packet[12] = 0x08;
+    packet[13] = 0x06;
+    packet[14] = 0x00;
+    packet[15] = 0x01;
+    packet[16] = 0x08;
+    packet[17] = 0x00;
+    packet[18] = 0x06;
+    packet[19] = 0x04;
+    packet[20] = 0x00;
+    packet[21] = 0x01;
+    for(int i=22; i<28; i++){
+        int j=0;
+        packet[i] = attack_mac[j];
+        j++;
+    }
+    for(int i=28; i<32; i++){
+        int j=0;
+        packet[i] = attack_ip[j];
+        j++;
+    }
+    for(int i=32; i<38; i++){
+        packet[i]=0x00;
+    }
+    for(int i=38; i<42; i++){
+        int j=0;
+        packet[i] = tip[j];
+        j++;
+    }
 
     pcap_sendpacket(handle, packet, 42);
     while(1)
