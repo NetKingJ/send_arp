@@ -20,39 +20,6 @@
 - Target Mac : 00:00:00:00:00:00
 - Target IP
 */
-/*
-typedef struct NTable{
-    unsigned int des[6];
-    unsigned int src[6];
-    unsigned int ptol;
-    unsigned int Htype;
-    unsigned int ptoltype;
-    unsigned int Hlen;
-    unsigned int Plen;
-    unsigned int Operation;
-    unsigned int smac[6];
-    unsigned int sip[4];
-    unsigned int tmac[6];
-    unsigned int tip[4];
-}NT;
-*/
-/*
-void Arp(NT *arp_t)
-{
-    struct NTable NT;
-    for(int i=0; i<6; i++)
-    {
-        arp_t->des[i] = 0xFF;
-        arp_t->tmac[i] = 0x00;
-    }
-    arp_t->ptol = htons(0x0806);
-    arp_t->Htype = htons(0x0001);
-    arp_t->ptoltype = htons(0x0800);
-    arp_t->Hlen = 0x06;
-    arp_t->Plen = 0x04;
-}
-*/
-
 void Get_Ip(u_int8_t *ip_addr, u_int8_t *interface)
 {
     int fd;
@@ -134,20 +101,3 @@ int main(int argc, char *argv[])
         printf("ARP SPOOFING :D\n");
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
