@@ -11,7 +11,6 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <unistd.h>
-
 /*
 - Ethernet Des : FFFFFF:FFFFFF
 - Ethernet Src : My Mac
@@ -31,7 +30,6 @@ void Get_Ip(u_int8_t *ip_addr, u_int8_t *interface)
     memcpy(ip_addr, &((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr, 4);
     close(fd);
 }
-
 void Get_Mac(u_int8_t *mac_addr, u_int8_t *interface)
 {
     int fd;
@@ -42,7 +40,6 @@ void Get_Mac(u_int8_t *mac_addr, u_int8_t *interface)
     memcpy(mac_addr, ifr.ifr_hwaddr.sa_data, 6);
     close(fd);
 }
-
 int main(int argc, char *argv[])
 {
     if (argc != 4) {
@@ -105,7 +102,6 @@ int main(int argc, char *argv[])
         packet[i] = tip[j];
         j++;
     }
-
     pcap_sendpacket(handle, packet, 42);
     while(1)
     {
